@@ -40,7 +40,7 @@ onmessage = async function (e) {
       return `<span class="symbol" data-value="${computedVar}">${p1}</span>`;
     });
     linesOutput.push(
-      `<span class="line"><span class="value">${lines[line]}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
+      `<span class="line"><span class="value">${textCompleted}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
     );
   }
   postMessage({ data: linesOutput, errors: errors });
