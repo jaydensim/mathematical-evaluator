@@ -51,6 +51,9 @@ class MathParser {
       }
     });
   }
+  getVars(val) {
+    return this.variables.get(val) || null;
+  }
   async #parse(input) {
     return new Promise(async (resolve, reject) => {
       try {

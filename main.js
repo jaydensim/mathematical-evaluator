@@ -20,13 +20,12 @@ if (useWorker) {
 const appContainer = document.querySelector("#app");
 appContainer.innerHTML = `
   <main>
-    <h1 class="widen">Mathematical Evaluator</h1>
-    <div class="status-container"></div>
-    <br/>
-    <br/>
-    <br/>
+    <header class="header">
+      <h1 class="widen">Mathematical Evaluator</h1>
+      <div class="status-container"></div>
+    </header>
     <section class="devContainer">
-    </section>
+    </section>  
   </main>
 `;
 function set(content) {
@@ -118,9 +117,21 @@ setTimeout(async () => {
               resultObj.value = e;
               resultObj.symbol = "⚠";
             });
-        }
+        } //
+
+        let textCompleted = lines[line].replaceAll(
+          /([a-zA-Z])/g,
+          (string, p1) => {
+            let computedVar = parser.getVars(p1) || "Undefined Variable";
+            return `<span class="symbol" data-value="${computedVar}">${p1}</span>`;
+          }
+        );
+
+        console.log(lines[line], textCompleted);
+
+        //
         linesOutput.push(
-          `<span class="line"><span class="value">${lines[line]}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
+          `<span class="line"><span class="value">${textCompleted}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
         );
       }
       resultarea.innerHTML = linesOutput.join("\n");

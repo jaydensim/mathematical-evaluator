@@ -7,14 +7,18 @@
   margin: 0;
   user-select: none;
 }
+body {
+  overflow-x: hidden !important;
+}
+
 html,
 body,
 #app {
-  height: 100%;
   display: flex;
-  flex-flow: column;
+  overflow: visible;
+  max-height: 100vh;
   align-items: center;
-  justify-content: center;
+  flex-flow: column;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   isolation: isolate;
@@ -31,14 +35,18 @@ body,
   --color-red: #9f504b;
   --color-green: #356b44;
 }
-#app,
-main {
-  max-width: calc(100vw - 50px);
-}
 .widen {
   width: 600px !important;
-  max-width: calc(100vw - 50px);
   display: block;
+}
+.header {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding-bottom: 20px;
+  background-color: #00080a;
 }
 .arctic {
   position: fixed;
@@ -96,8 +104,8 @@ a {
 }
 
 .devContainer {
-  height: 500px;
-  overflow: auto;
+  overflow: visible;
+  max-width: 600px;
 }
 
 .modulesContainer {
@@ -118,7 +126,7 @@ a {
   overflow: hidden;
   color: #ffffff;
   background-color: #ffffff00;
-  opacity: 0.75;
+  /*opacity: 0.75;*/
   outline: none;
   user-select: text;
 }
@@ -129,13 +137,16 @@ a {
   font: inherit;
   grid-area: 1 / 1 / 2 / 2;
   min-height: 500px;
+  overflow: visible;
+  word-wrap: anywhere;
 }
 
 span.line span.value {
-  opacity: 0;
+  /*opacity: 0;*/
 }
 
 span.line span.result {
+  word-wrap: normal;
   padding-left: 20px;
   position: sticky;
   right: 0px;
@@ -175,6 +186,59 @@ span.line span.result[data-type="error"] {
   animation: spin 1s linear infinite;
   stroke: currentColor !important;
 }
+.status-container[data-status="error"] svg line {
+  stroke-dasharray: 9px;
+  stroke-dashoffset: 0;
+  animation: lineAnim 0.2s ease-out;
+}
+.status-container[data-status="error"] svg circle {
+  stroke-dasharray: 62px;
+  stroke-dashoffset: 0;
+  animation: circleAnim 0.2s ease-out;
+}
+
+.status-container[data-status="check"] svg polyline {
+  stroke-dasharray: 19px;
+  stroke-dashoffset: 38px;
+  animation: checkAnim 0.2s ease-out;
+}
+.status-container[data-status="check"] svg path {
+  stroke-dasharray: 52px;
+  stroke-dashoffset: 0;
+  animation: strokeAnim 0.2s ease-out;
+}
+@keyframes checkAnim {
+  from {
+    stroke-dashoffset: 19;
+  }
+  to {
+    stroke-dashoffset: 38;
+  }
+}
+@keyframes strokeAnim {
+  from {
+    stroke-dashoffset: 52;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes lineAnim {
+  from {
+    stroke-dashoffset: 9px;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes circleAnim {
+  from {
+    stroke-dashoffset: 62px;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 
 @keyframes spin {
   from {
@@ -182,5 +246,67 @@ span.line span.result[data-type="error"] {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.symbol {
+  pointer-events: all;
+  position: relative;
+}
+.symbol:after {
+  content: attr(data-value);
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  background-color: #00080a;
+  top: 0px;
+  transform: translate(-50%, -100%);
+  left: 50%;
+  padding: 5px 10px;
+  border: 1px solid var(--color-blue);
+  border-radius: 3px;
+  animation: slide-up 0.2s ease-out;
+  word-wrap: normal;
+  text-align: center;
+}
+
+.symbol:before {
+  content: "";
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  top: 3px;
+  transform: translate(-50%, -100%) rotate(45deg);
+  left: 50%;
+  border-right: 1px solid var(--color-blue);
+  border-bottom: 1px solid var(--color-blue);
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-blue);
+}
+
+.symbol:hover {
+  color: var(--color-blue) !important;
+}
+.symbol:hover:before,
+.symbol:hover:after {
+  display: block;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translate(-50%, -100%) translateY(3px);
+  }
+  100% {
+    transform: translate(-50%, -100%) translateY(0%);
+  }
+}
+
+@keyframes slide-up-rotate {
+  0% {
+    transform: translate(-50%, -100%) translateY(10%) rotate(45deg);
+  }
+  100% {
+    transform: translate(-50%, -100%) translateY(5%) rotate(45deg);
   }
 }
