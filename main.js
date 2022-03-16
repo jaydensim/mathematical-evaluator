@@ -23,15 +23,25 @@ appContainer.innerHTML = `
     <header class="header">
       <h1 class="widen">Mathematical Evaluator</h1>
       <div class="status-container"></div>
+      <div class="soldier-container"></div>
     </header>
     <section class="devContainer">
     </section>  
   </main>
 `;
+
 function set(content) {
   document.querySelector(".devContainer").innerHTML = content;
 }
 set("");
+const soldierImage = `<br/><br/><img class="soldier" src="">`;
+const isSoldierVisible = localStorage.getItem("soldier") || false;
+if (isSoldierVisible) {
+  document.querySelector(".soldier-container").innerHTML = soldierImage;
+  document.querySelector(".soldier").src =
+    document.querySelector(".hiddensoldier").src;
+}
+
 const status = new StatusReporter(document.querySelector(".status-container"));
 status.setStatus("loading", `Loading Modules...`);
 const devContainer = document.querySelector(".devContainer");
