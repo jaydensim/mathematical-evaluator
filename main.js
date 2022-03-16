@@ -126,9 +126,6 @@ setTimeout(async () => {
             return `<span class="symbol" data-value="${computedVar}">${p1}</span>`;
           }
         );
-
-        console.log(lines[line], textCompleted);
-
         //
         linesOutput.push(
           `<span class="line"><span class="value">${textCompleted}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
