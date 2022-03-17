@@ -35,6 +35,15 @@ body,
   --color-red: #9f504b;
   --color-green: #356b44;
 }
+a {
+  color: #ffffff;
+  margin-top: 50px;
+  display: block;
+  font-weight: 800;
+  font-variation-settings: "wght" 800;
+  letter-spacing: -0.03em;
+}
+
 .widen {
   width: 600px !important;
   display: block;
@@ -47,7 +56,19 @@ body,
   z-index: 1000;
   padding-bottom: 20px;
   background-color: #00080a;
+  display: flex;
+  flex-flow: row;
+  height: min-content;
 }
+.soldier {
+  height: 200px;
+  max-height: 50vh;
+  margin-right: 50px;
+}
+.hiddensoldier {
+  display: none;
+}
+
 .arctic {
   position: fixed;
   bottom: 1rem;
@@ -88,14 +109,6 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-.soldier {
-  width: 500px;
-}
-.hiddensoldier {
-  display: none;
-}
-
 @keyframes slide-right {
   0% {
     opacity: 0;

@@ -21,9 +21,12 @@ const appContainer = document.querySelector("#app");
 appContainer.innerHTML = `
   <main>
     <header class="header">
-      <h1 class="widen">Mathematical Evaluator</h1>
-      <div class="status-container"></div>
       <div class="soldier-container"></div>
+      <div>
+        <h1 class="widen">Mathematical Evaluator</h1>
+        <div class="status-container"></div>
+        <div class="faliure-container"></div>
+      </div>
     </header>
     <section class="devContainer">
     </section>  
@@ -34,12 +37,15 @@ function set(content) {
   document.querySelector(".devContainer").innerHTML = content;
 }
 set("");
-const soldierImage = `<br/><br/><img class="soldier" src="">`;
+const soldierImage = `<img class="soldier" src="">`;
 const isSoldierVisible = localStorage.getItem("soldier") || false;
 if (isSoldierVisible) {
   document.querySelector(".soldier-container").innerHTML = soldierImage;
   document.querySelector(".soldier").src =
     document.querySelector(".hiddensoldier").src;
+  document.querySelector(
+    ".faliure-container"
+  ).innerHTML = `<a href="https://app.defencejobs.gov.au/olat/">.</a>`;
 }
 
 const status = new StatusReporter(document.querySelector(".status-container"));
