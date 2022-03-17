@@ -162,7 +162,7 @@ function generateParseFunction(input, CalculationtreeConstructor) {
 
 const parse = (input, CTC) => {
   return new Promise((resolve, reject) => {
-    console.log(input);
+    //console.log(input);
     try {
       const transport = generateParseFunction(input, CTC);
       resolve(transport);

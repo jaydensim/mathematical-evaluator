@@ -14,7 +14,7 @@ function calcParseAST(input, CalculatorConstructor) {
       flowElement.type,
       flowElement.values
     );
-    console.log(result);
+    //console.log(result);
   });
   return result;
 }

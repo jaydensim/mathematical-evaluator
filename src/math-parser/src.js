@@ -82,7 +82,7 @@ class MathParser {
               (match, p1, p2, p3) => {
                 let pe1 = p1;
                 let pe3 = p3;
-                console.log(p1, p3);
+                //console.log(p1, p3);
                 if (pe3 !== "") pe3 = pe3 + "*";
                 if (pe1 !== "") pe1 = pe1 + "*";
                 return `${pe1}${element[1]}${pe3}`;

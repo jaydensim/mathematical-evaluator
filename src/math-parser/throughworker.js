@@ -20,6 +20,10 @@ onmessage = async function (e) {
       resultObj.value = "4";
       resultObj.type = "result";
       resultObj.symbol = "=";
+    } else if (lines[line].trim().replaceAll(" ", "") == "1+1") {
+      resultObj.value = "2, or 0 if you're Josh Charleton";
+      resultObj.type = "result";
+      resultObj.symbol = "=";
     } else {
       await parser
         .evaluate(lines[line])
