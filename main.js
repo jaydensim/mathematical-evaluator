@@ -10,6 +10,7 @@ const environment = {
   isProd: import.meta.env.PROD,
   flags: (localStorage.getItem("flags") || "").split(" "),
 };
+window["environment"] = environment;
 const useWorker =
   false || environment.isProd || environment.flags.includes("forceWorker");
 
