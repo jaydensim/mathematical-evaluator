@@ -8,9 +8,16 @@ import StatusReporter from "./src/ui/StatusReporter";
 
 const environment = {
   isProd: import.meta.env.PROD,
+  flags: (localStorage.getItem("flags") || "").split(" "),
 };
+const useWorker =
+  false || environment.isProd || environment.flags.includes("forceWorker");
 
-const useWorker = false || environment.isProd;
+console.group("Hello World! Is there anyone there?");
+console.log("isProd:", environment.isProd);
+console.log("flags:", environment.flags.join(", "));
+console.log("WillUseWorker", useWorker);
+console.groupEnd();
 
 let mathWorker = null;
 if (useWorker) {
@@ -37,21 +44,22 @@ function set(content) {
   document.querySelector(".devContainer").innerHTML = content;
 }
 set("");
-const soldierImage = `<img class="soldier" src="">`;
-const isSoldierVisible = localStorage.getItem("soldier") || false;
-if (isSoldierVisible) {
-  document.querySelector(".soldier-container").innerHTML = soldierImage;
-  document.querySelector(".soldier").src =
-    document.querySelector(".hiddensoldier").src;
+if (environment.flags.includes("soldier")) {
+  document.querySelector(
+    ".soldier-container"
+  ).innerHTML = `<img class="soldier" src="${
+    document.querySelector(".hiddensoldier").src
+  }">`;
+}
+if (environment.flags.includes("faliure")) {
   document.querySelector(
     ".faliure-container"
-  ).innerHTML = `<a href="https://app.defencejobs.gov.au/olat/">.</a>`;
+  ).innerHTML = `<span></span><a href="https://app.defencejobs.gov.au/olat/">Faliure</a>`;
 }
 
 const status = new StatusReporter(document.querySelector(".status-container"));
 status.setStatus("loading", `Loading Modules...`);
 const devContainer = document.querySelector(".devContainer");
-const loaderSpinner = document.querySelector(".loaderSpinner");
 
 setTimeout(async () => {
   const inputParent = document.createElement("div");
@@ -113,8 +121,9 @@ setTimeout(async () => {
         if (lines[line].trim() == "") {
           resultObj.value = "&nbsp";
         } else if (
-          lines[line].trim().replaceAll(" ", "") == "1+2" ||
-          lines[line].trim().replaceAll(" ", "") == "2+1"
+          environment.flags.includes("faliure") &&
+          (lines[line].trim().replaceAll(" ", "") == "1+2" ||
+            lines[line].trim().replaceAll(" ", "") == "2+1")
         ) {
           resultObj.value = "4";
           resultObj.type = "result";

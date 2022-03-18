@@ -14,14 +14,11 @@ onmessage = async function (e) {
     if (lines[line].trim() == "") {
       resultObj.value = "&nbsp";
     } else if (
-      lines[line].trim().replaceAll(" ", "") == "1+2" ||
-      lines[line].trim().replaceAll(" ", "") == "2+1"
+      environment.flags.includes("faliure") &&
+      (lines[line].trim().replaceAll(" ", "") == "1+2" ||
+        lines[line].trim().replaceAll(" ", "") == "2+1")
     ) {
       resultObj.value = "4";
-      resultObj.type = "result";
-      resultObj.symbol = "=";
-    } else if (lines[line].trim().replaceAll(" ", "") == "1+1") {
-      resultObj.value = "2, or 0 if you're Josh Charleton";
       resultObj.type = "result";
       resultObj.symbol = "=";
     } else {
