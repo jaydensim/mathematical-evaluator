@@ -91,6 +91,10 @@ setTimeout(async () => {
     textarea.addEventListener("input", async () => {
       status.setStatus("loading", `Processing...`);
       timeStart = performance.now();
+      if (textarea.value.includes("set_flags:")) {
+        const flags = textarea.value.split("set_flags:")[1].trim();
+        localStorage.setItem("flags", flags);
+      }
       let lines = textarea.value.split(/\n/);
       let linesOutput = [];
       for (let line in lines) {
@@ -110,6 +114,10 @@ setTimeout(async () => {
       status.setStatus("loading", `Processing...`);
       let timeStart = performance.now();
       let errors = 0;
+      if (textarea.value.includes("set_flags:")) {
+        const flags = textarea.value.split("set_flags:")[1].trim();
+        localStorage.setItem("flags", flags);
+      }
       const parser = new MathParser();
       let lines = textarea.value.split(/\n/);
       let linesOutput = [];
