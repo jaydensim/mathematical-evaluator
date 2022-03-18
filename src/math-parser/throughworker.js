@@ -3,7 +3,7 @@ import MathParser from "./src.js";
 onmessage = async function (e) {
   let errors = 0;
   const parser = new MathParser();
-  let lines = e.data.split(/\n/);
+  let lines = e.data[0].split(/\n/);
   let linesOutput = [];
   for (let line in lines) {
     let resultObj = {
@@ -14,7 +14,7 @@ onmessage = async function (e) {
     if (lines[line].trim() == "") {
       resultObj.value = "&nbsp";
     } else if (
-      environment.flags.includes("faliure") &&
+      e.data[1].flags.includes("faliure") &&
       (lines[line].trim().replaceAll(" ", "") == "1+2" ||
         lines[line].trim().replaceAll(" ", "") == "2+1")
     ) {

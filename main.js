@@ -103,7 +103,7 @@ setTimeout(async () => {
           `<span class="line"><span class="value">${lines[line]}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
         );
       }
-      mathWorker.postMessage(textarea.value);
+      mathWorker.postMessage([textarea.value, environment]);
     });
   } else {
     textarea.addEventListener("input", async () => {
