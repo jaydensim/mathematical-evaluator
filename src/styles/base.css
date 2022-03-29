@@ -107,7 +107,6 @@ p {
 }
 a {
   color: inherit;
-  text-decoration: none;
 }
 @keyframes slide-right {
   0% {
@@ -157,7 +156,7 @@ a {
   font: inherit;
   grid-area: 1 / 1 / 2 / 2;
   min-height: 500px;
-  overflow: visible;
+  /*overflow: visible;*/
   word-wrap: anywhere;
 }
 
@@ -196,6 +195,10 @@ span.line span.result[data-type="error"] {
 .status-container {
   display: flex;
   gap: 20px;
+}
+
+.status-container p {
+  font-variant-numeric: tabular-nums;
 }
 
 .status-container[data-status="error"] p,
@@ -328,5 +331,38 @@ span.line span.result[data-type="error"] {
   }
   100% {
     transform: translate(-50%, -100%) translateY(5%) rotate(45deg);
+  }
+}
+
+.statusSlider {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 2px;
+  padding: 5px;
+  width: 100%;
+}
+
+.statusSlider div {
+  background-color: #ffffff;
+  height: 5px;
+  border-radius: 5px;
+  transition: 0.2s linear;
+}
+.statusSlider div[data-status="0"] {
+  transition: 0s linear;
+}
+
+.statusSlider div[data-status="100"] {
+  animation: slide-100 0.5s ease;
+  opacity: 0;
+}
+
+@keyframes slide-100 {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

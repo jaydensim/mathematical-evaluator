@@ -66,6 +66,7 @@ class MathParser {
       }
     });
   }
+  // Why are you still reading this?
   #replacer(str, map) {
     map.set("e", Math.E);
     let inputString = str;

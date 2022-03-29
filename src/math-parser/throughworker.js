@@ -5,7 +5,10 @@ onmessage = async function (e) {
   const parser = new MathParser();
   let lines = e.data[0].split(/\n/);
   let linesOutput = [];
+  let totalLines = lines.length;
+  let currentLine = 0;
   for (let line in lines) {
+    currentLine++;
     let resultObj = {
       type: "undefined",
       value: "",
@@ -43,6 +46,15 @@ onmessage = async function (e) {
     linesOutput.push(
       `<span class="line"><span class="value">${textCompleted}</span><span class="result" data-type="${resultObj.type}" data-symbol="${resultObj.symbol}">${resultObj.value}</span></span>`
     );
+    postMessage({
+      type: "status",
+      status: currentLine,
+      totalLines: totalLines,
+    });
   }
-  postMessage({ data: linesOutput, errors: errors });
+  postMessage({
+    type: "final",
+    data: linesOutput,
+    errors: errors,
+  });
 };

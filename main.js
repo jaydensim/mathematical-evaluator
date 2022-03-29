@@ -7,7 +7,7 @@ import MathWorker from "./src/math-parser/throughworker.js?worker";
 import StatusReporter from "./src/ui/StatusReporter";
 
 const environment = {
-  isProd: import.meta.env.PROD,
+  isProd: true, //import.meta.env.PROD,
   flags: (localStorage.getItem("flags") || "").split(" "),
 };
 window["environment"] = environment;
@@ -21,8 +21,10 @@ console.log("WillUseWorker", useWorker);
 console.groupEnd();
 
 let mathWorker = null;
+let isWorkerRunning = true;
 if (useWorker) {
   mathWorker = new MathWorker();
+  isWorkerRunning = true;
 }
 
 const appContainer = document.querySelector("#app");
@@ -73,23 +75,38 @@ setTimeout(async () => {
   if (useWorker) {
     let timeStart = null;
     mathWorker.onmessage = (e) => {
-      resultarea.innerHTML = e.data.data.join("\n");
-      let timeFinish = (performance.now() - timeStart).toFixed(2);
-      if (e.data.errors == 1)
-        status.setStatus(
-          "error",
-          `Finished with ${e.data.errors} error in ${timeFinish}ms`
-        );
-      if (e.data.errors > 1)
-        status.setStatus(
-          "error",
-          `Finished with ${e.data.errors} errors in ${timeFinish}ms`
-        );
-      if (e.data.errors == 0)
-        status.setStatus("check", `Finished in ${timeFinish}ms`);
+      if (e.data.type == "final") {
+        resultarea.innerHTML = e.data.data.join("\n");
+        let timeFinish = (performance.now() - timeStart).toFixed(2);
+        if (e.data.errors == 1)
+          status.setStatus(
+            "error",
+            `Finished with ${e.data.errors} error in ${timeFinish}ms`,
+            100
+          );
+        if (e.data.errors > 1)
+          status.setStatus(
+            "error",
+            `Finished with ${e.data.errors} errors in ${timeFinish}ms`,
+            100
+          );
+        if (e.data.errors == 0)
+          status.setStatus("check", `Finished in ${timeFinish}ms`);
+      } else if (e.data.type == "status") {
+        if (e.data.totalLines > 50) {
+          let finalisedPercent = (e.data.status / e.data.totalLines) * 100;
+          status.setStatus(
+            "loading",
+            `Processing line ${e.data.status} of ${
+              e.data.totalLines
+            } (${Math.round(finalisedPercent)}%)`,
+            finalisedPercent
+          );
+        }
+      }
     };
     textarea.addEventListener("input", async () => {
-      status.setStatus("loading", `Processing...`);
+      status.setStatus("loading", `Processing...`, 0);
       timeStart = performance.now();
       if (textarea.value.includes("set_flags:")) {
         const flags = textarea.value.split("set_flags:")[1].trim();

@@ -4,13 +4,21 @@ class StatusReporter {
     check: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>`,
     error: `<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>`,
   };
+  statusOldIcon = null;
   statusicon = null;
   statustext = null;
+  statusSliderOuter = null;
+  statusSlider = null;
   statuscontainer = null;
   constructor(el) {
     this.statusicon = document.createElement("div");
     this.statustext = document.createElement("p");
     this.statuscontainer = document.createElement("div");
+
+    this.statusSliderOuter = document.createElement("div");
+    this.statusSlider = document.createElement("div");
+
+    this.statusSliderOuter.classList.add("statusSlider");
 
     this.statustext.innerText = "Ready...";
 
@@ -18,14 +26,22 @@ class StatusReporter {
 
     this.statuscontainer.appendChild(this.statusicon);
     this.statuscontainer.appendChild(this.statustext);
+    this.statusSliderOuter.appendChild(this.statusSlider);
+    this.statuscontainer.appendChild(this.statusSliderOuter);
 
     el.appendChild(this.statuscontainer);
   }
 
-  setStatus(status, text) {
+  setStatus(status, text, percent) {
+    let statusIconNew = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${this.graphics[status]}</svg>`;
     this.statuscontainer.setAttribute("data-status", status);
-    this.statusicon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${this.graphics[status]}</svg>`;
+    if (this.statusOldIcon !== this.statusicon)
+      this.statusicon.innerHTML = statusIconNew;
+    this.statusOldIcon = this.statusicon;
     this.statustext.innerText = text;
+
+    this.statusSlider.setAttribute("data-status", percent || 100);
+    this.statusSlider.style.width = percent + "%";
   }
 }
 
