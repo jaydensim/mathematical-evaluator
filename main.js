@@ -104,7 +104,14 @@ setTimeout(async () => {
       timeStart = performance.now();
       if (textarea.value.includes("setflags: ")) {
         const flags = textarea.value.split("setflags: ")[1].trim();
-        localStorage.setItem("flags", flags);
+        localStorage.setItem("flags", flags.split('\n')[0]);
+        setTimeout(() => {
+          status.setStatus(
+            "check",
+            `Set flags to ${flags.split('\n')[0]}`,
+            100
+          );
+        }, 100);
       }
       let lines = textarea.value.split(/\n/);
       let linesOutput = [];
@@ -125,9 +132,16 @@ setTimeout(async () => {
       status.setStatus("loading", `Processing...`);
       let timeStart = performance.now();
       let errors = 0;
-      if (textarea.value.includes("set_flags:")) {
-        const flags = textarea.value.split("set_flags:")[1].trim();
-        localStorage.setItem("flags", flags);
+      if (textarea.value.includes("setflags:")) {
+        const flags = textarea.value.split("setflags:")[1].trim();
+        localStorage.setItem("flags", flags.split('\n')[0]);
+        setTimeout(() => {
+          status.setStatus(
+            "check",
+            `Set flags to ${flags.split('\n')[0]}`,
+            100
+          );
+        }, 100);
       }
       const parser = new MathParser();
       let lines = textarea.value.split(/\n/);
