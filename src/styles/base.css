@@ -386,10 +386,12 @@ span.line span.result[data-type="error"] {
   75% {
     opacity: 1;
     margin: 2rem 0px 1rem 0px;
+    height: 2px;
   }
 
   100% {
     opacity: 0;
     margin: 0rem 0rem 0rem 0rem;
+    height: 0px;
   }
 }
