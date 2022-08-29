@@ -374,18 +374,22 @@ span.line span.result[data-type="error"] {
 }
 
 .statusSlider div[data-status="100"] {
-  animation: slide-100 0.5s ease;
+  animation: slide-100 2s ease;
   margin: 0rem 0rem 0rem 0rem;
   opacity: 0;
   height: 0px;
 }
 
 @keyframes slide-100 {
-  0% {
+
+  0%,
+  75% {
     opacity: 1;
+    margin: 2rem 0px 1rem 0px;
   }
 
   100% {
     opacity: 0;
+    margin: 0rem 0rem 0rem 0rem;
   }
 }

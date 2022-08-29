@@ -69,21 +69,24 @@ setTimeout(async () => {
     mathWorker.onmessage = (e) => {
       if (e.data.type == "final") {
         resultarea.innerHTML = e.data.data.join("\n");
-        let timeFinish = (performance.now() - timeStart).toFixed(2);
-        if (e.data.errors == 1)
-          status.setStatus(
-            "error",
-            `Finished with ${e.data.errors} error in ${timeFinish}ms`,
-            100
-          );
-        if (e.data.errors > 1)
-          status.setStatus(
-            "error",
-            `Finished with ${e.data.errors} errors in ${timeFinish}ms`,
-            100
-          );
-        if (e.data.errors == 0)
-          status.setStatus("check", `Finished in ${timeFinish}ms`);
+
+        window.requestAnimationFrame(() => {
+          let timeFinish = (performance.now() - timeStart).toFixed(2);
+          if (e.data.errors == 1)
+            status.setStatus(
+              "error",
+              `Finished with ${e.data.errors} error in ${timeFinish}ms`,
+              100
+            );
+          if (e.data.errors > 1)
+            status.setStatus(
+              "error",
+              `Finished with ${e.data.errors} errors in ${timeFinish}ms`,
+              100
+            );
+          if (e.data.errors == 0)
+            status.setStatus("check", `Finished in ${timeFinish}ms`);
+        })
       } else if (e.data.type == "status") {
         if (e.data.totalLines > 50) {
           let finalisedPercent = (e.data.status / e.data.totalLines) * 100;
@@ -99,8 +102,8 @@ setTimeout(async () => {
     textarea.addEventListener("input", async () => {
       status.setStatus("loading", `Processing...`, 0);
       timeStart = performance.now();
-      if (textarea.value.includes("set_flags:")) {
-        const flags = textarea.value.split("set_flags:")[1].trim();
+      if (textarea.value.includes("setflags: ")) {
+        const flags = textarea.value.split("setflags: ")[1].trim();
         localStorage.setItem("flags", flags);
       }
       let lines = textarea.value.split(/\n/);
@@ -174,18 +177,20 @@ setTimeout(async () => {
         );
       }
       resultarea.innerHTML = linesOutput.join("\n");
-      let timeFinish = (performance.now() - timeStart).toFixed(2);
-      if (errors == 1)
-        status.setStatus(
-          "error",
-          `Finished with ${errors} error in ${timeFinish}ms`
-        );
-      if (errors > 1)
-        status.setStatus(
-          "error",
-          `Finished with ${errors} errors in ${timeFinish}ms`
-        );
-      if (errors == 0) status.setStatus("check", `Finished in ${timeFinish}ms`);
+      window.requestAnimationFrame(() => {
+        let timeFinish = (performance.now() - timeStart).toFixed(2);
+        if (errors == 1)
+          status.setStatus(
+            "error",
+            `Finished with ${errors} error in ${timeFinish}ms`
+          );
+        if (errors > 1)
+          status.setStatus(
+            "error",
+            `Finished with ${errors} errors in ${timeFinish}ms`
+          );
+        if (errors == 0) status.setStatus("check", `Finished in ${timeFinish}ms`);
+      });
     });
   }
   devContainer.innerHTML = "";
