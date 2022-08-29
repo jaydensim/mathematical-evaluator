@@ -7,7 +7,7 @@ import MathWorker from "./src/math-parser/throughworker.js?worker";
 import StatusReporter from "./src/ui/StatusReporter";
 
 const environment = {
-  isProd: true, //import.meta.env.PROD,
+  isProd: import.meta.env.PROD,
   flags: (localStorage.getItem("flags") || "").split(" "),
 };
 window["environment"] = environment;
@@ -31,10 +31,9 @@ const appContainer = document.querySelector("#app");
 appContainer.innerHTML = `
   <main>
     <header class="header">
-      <div class="soldier-container"></div>
       <div>
         <h1 class="widen">Mathematical Evaluator</h1>
-        <div class="status-container"></div>
+        <div class="status-container-outer"></div>
         <div class="faliure-container"></div>
       </div>
     </header>
@@ -47,20 +46,13 @@ function set(content) {
   document.querySelector(".devContainer").innerHTML = content;
 }
 set("");
-if (environment.flags.includes("soldier")) {
-  document.querySelector(
-    ".soldier-container"
-  ).innerHTML = `<img class="soldier" src="${
-    document.querySelector(".hiddensoldier").src
-  }">`;
-}
 if (environment.flags.includes("faliure")) {
   document.querySelector(
     ".faliure-container"
-  ).innerHTML = `<span></span><a href="https://app.defencejobs.gov.au/olat/">Faliure</a>`;
+  ).innerHTML = `<span></span><a>Faliure</a>`;
 }
 
-const status = new StatusReporter(document.querySelector(".status-container"));
+const status = new StatusReporter(document.querySelector(".status-container-outer"));
 status.setStatus("loading", `Loading Modules...`);
 const devContainer = document.querySelector(".devContainer");
 
@@ -97,8 +89,7 @@ setTimeout(async () => {
           let finalisedPercent = (e.data.status / e.data.totalLines) * 100;
           status.setStatus(
             "loading",
-            `Processing line ${e.data.status} of ${
-              e.data.totalLines
+            `Processing line ${e.data.status} of ${e.data.totalLines
             } (${Math.round(finalisedPercent)}%)`,
             finalisedPercent
           );

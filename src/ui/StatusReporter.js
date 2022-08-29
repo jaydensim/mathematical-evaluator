@@ -27,7 +27,7 @@ class StatusReporter {
     this.statuscontainer.appendChild(this.statusicon);
     this.statuscontainer.appendChild(this.statustext);
     this.statusSliderOuter.appendChild(this.statusSlider);
-    this.statuscontainer.appendChild(this.statusSliderOuter);
+    el.appendChild(this.statusSliderOuter);
 
     el.appendChild(this.statuscontainer);
   }
@@ -35,13 +35,13 @@ class StatusReporter {
   setStatus(status, text, percent) {
     let statusIconNew = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${this.graphics[status]}</svg>`;
     this.statuscontainer.setAttribute("data-status", status);
-    if (this.statusOldIcon !== this.statusicon)
-      this.statusicon.innerHTML = statusIconNew;
-    this.statusOldIcon = this.statusicon;
+    if (this.statusOldIcon !== status) this.statusicon.innerHTML = statusIconNew;
     this.statustext.innerText = text;
 
     this.statusSlider.setAttribute("data-status", percent || 100);
     this.statusSlider.style.width = percent + "%";
+
+    this.statusOldIcon = status;
   }
 }
 

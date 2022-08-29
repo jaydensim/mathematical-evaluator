@@ -3,10 +3,12 @@
 *::after {
   box-sizing: border-box;
 }
+
 * {
   margin: 0;
   user-select: none;
 }
+
 body {
   overflow-x: hidden !important;
 }
@@ -35,6 +37,7 @@ body,
   --color-red: #9f504b;
   --color-green: #356b44;
 }
+
 a {
   color: #ffffff;
   margin-top: 50px;
@@ -48,6 +51,7 @@ a {
   width: 600px !important;
   display: block;
 }
+
 .header {
   margin-top: 50px;
   margin-bottom: 20px;
@@ -60,22 +64,15 @@ a {
   flex-flow: row;
   height: min-content;
 }
-.soldier {
-  height: 200px;
-  max-height: 50vh;
-  margin-right: 50px;
-}
-.hiddensoldier {
-  display: none;
-}
 
 .arctic {
   position: fixed;
   bottom: 1rem;
   left: 1rem;
-  width: 3rem;
+  width: 2rem;
   z-index: 999999999;
 }
+
 img,
 picture,
 video,
@@ -84,12 +81,14 @@ svg {
   display: block;
   max-width: 100%;
 }
+
 input,
 button,
 textarea,
 select {
   font: inherit;
 }
+
 p,
 h1,
 h2,
@@ -102,22 +101,27 @@ h6 {
   font-variation-settings: "wght" 800;
   letter-spacing: -0.03em;
 }
+
 p {
   overflow-wrap: break-word;
 }
+
 a {
   color: inherit;
 }
+
 @keyframes slide-right {
   0% {
     opacity: 0;
     transform: translateX(5%);
   }
+
   100% {
     opacity: 1;
     transform: translateX(0%);
   }
 }
+
 .anim--slide-right {
   animation: slide-right 0.2s ease-out;
 }
@@ -136,11 +140,13 @@ a {
   display: grid;
   font-family: "JetBrains MonoVariable";
 }
+
 .textareaParent code {
   white-space: pre-wrap;
   pointer-events: none;
 }
-.textareaParent > textarea {
+
+.textareaParent>textarea {
   resize: none;
   overflow: hidden;
   color: #ffffff;
@@ -149,6 +155,7 @@ a {
   outline: none;
   user-select: text;
 }
+
 .textareaParent textarea,
 .textareaParent code {
   border: 0px solid #ffffff00;
@@ -171,6 +178,7 @@ span.line span.result {
   right: 0px;
   background: linear-gradient(90deg, transparent 0%, #00080a 10%);
 }
+
 span.line span.result[data-type="undefined"] {
   opacity: 0;
 }
@@ -179,6 +187,7 @@ span.line span.result:before {
   content: attr(data-symbol);
   margin-right: 5px;
 }
+
 span.line span.result[data-type="error"] {
   color: var(--color-red);
 }
@@ -192,6 +201,7 @@ span.line span.result[data-type="error"] {
   height: 24px;
   display: block;
 }
+
 .status-container {
   display: flex;
   gap: 20px;
@@ -205,15 +215,18 @@ span.line span.result[data-type="error"] {
 .status-container[data-status="error"] svg {
   color: var(--color-red);
 }
+
 .status-container[data-status="loading"] svg {
   animation: spin 1s linear infinite;
   stroke: currentColor !important;
 }
+
 .status-container[data-status="error"] svg line {
   stroke-dasharray: 9px;
   stroke-dashoffset: 0;
   animation: lineAnim 0.2s ease-out;
 }
+
 .status-container[data-status="error"] svg circle {
   stroke-dasharray: 62px;
   stroke-dashoffset: 0;
@@ -225,39 +238,48 @@ span.line span.result[data-type="error"] {
   stroke-dashoffset: 38px;
   animation: checkAnim 0.2s ease-out;
 }
+
 .status-container[data-status="check"] svg path {
   stroke-dasharray: 52px;
   stroke-dashoffset: 0;
   animation: strokeAnim 0.2s ease-out;
 }
+
 @keyframes checkAnim {
   from {
     stroke-dashoffset: 19;
   }
+
   to {
     stroke-dashoffset: 38;
   }
 }
+
 @keyframes strokeAnim {
   from {
     stroke-dashoffset: 52;
   }
+
   to {
     stroke-dashoffset: 0;
   }
 }
+
 @keyframes lineAnim {
   from {
     stroke-dashoffset: 9px;
   }
+
   to {
     stroke-dashoffset: 0;
   }
 }
+
 @keyframes circleAnim {
   from {
     stroke-dashoffset: 62px;
   }
+
   to {
     stroke-dashoffset: 0;
   }
@@ -267,6 +289,7 @@ span.line span.result[data-type="error"] {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -276,6 +299,7 @@ span.line span.result[data-type="error"] {
   pointer-events: all;
   position: relative;
 }
+
 .symbol:after {
   content: attr(data-value);
   display: none;
@@ -311,6 +335,7 @@ span.line span.result[data-type="error"] {
 .symbol:hover {
   color: var(--color-blue) !important;
 }
+
 .symbol:hover:before,
 .symbol:hover:after {
   display: block;
@@ -320,6 +345,7 @@ span.line span.result[data-type="error"] {
   0% {
     transform: translate(-50%, -100%) translateY(3px);
   }
+
   100% {
     transform: translate(-50%, -100%) translateY(0%);
   }
@@ -329,39 +355,36 @@ span.line span.result[data-type="error"] {
   0% {
     transform: translate(-50%, -100%) translateY(10%) rotate(45deg);
   }
+
   100% {
     transform: translate(-50%, -100%) translateY(5%) rotate(45deg);
   }
 }
 
 .statusSlider {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  height: 2px;
-  padding: 5px;
   width: 100%;
 }
 
 .statusSlider div {
   background-color: #ffffff;
-  height: 5px;
+  height: 2px;
   border-radius: 5px;
-  transition: 0.2s linear;
-}
-.statusSlider div[data-status="0"] {
-  transition: 0s linear;
+  margin: 2rem 0px 1rem 0px;
+  transition: height 0.2s ease, margin 0.2s ease;
 }
 
 .statusSlider div[data-status="100"] {
   animation: slide-100 0.5s ease;
+  margin: 0rem 0rem 0rem 0rem;
   opacity: 0;
+  height: 0px;
 }
 
 @keyframes slide-100 {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
